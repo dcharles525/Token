@@ -37,7 +37,7 @@ Class Token {
   //Setting up variables and setting the initial token
   public function __construct ($tokenName, $url, $tokenUrl, $testing) {
 
-    $this->tokenPath = "tokens/$tokenName.txt";
+    $this->tokenPath = "tokens\$tokenName.txt";
     $this->url = $url;
     $this->tokenUrl = $tokenUrl;
     $this->testing = $testing;
@@ -69,11 +69,11 @@ Class Token {
       //reading the whole file
       $token = fread (
         $tokenFileObject, 
-        filesize ($this->tokenPath)
+        filesize ($this->tokenPath) + 1
       );
 
       //getting new token if other is expired/invalid
-      if ($this->testToken ($token)) 
+      if ($this->testToken ($token) === 1) 
         $this->token = $token;
       else
         $this->token = $this->authenticate ();
