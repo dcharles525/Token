@@ -24,7 +24,7 @@
 // for other tokens.  
 //
 // Author: David Johnson
-// Last Modified Date: 11/29/20
+// Last Modified Date: 11/30/20
 
 Class Token {
 
@@ -80,7 +80,7 @@ Class Token {
     
     }
 
-    fwrite ($this->token);
+    fwrite ($tokenFileObject, $this->token);
     fclose ($tokenFileObject);
 
   }
