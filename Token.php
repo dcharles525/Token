@@ -37,7 +37,7 @@ Class Token {
   //Setting up variables and setting the initial token
   public function __construct ($tokenName, $url, $tokenUrl, $testing) {
 
-    $this->tokenPath = "tokens\$tokenName.txt";
+    $this->tokenPath = $_SERVER["DOCUMENT_ROOT"]."libs\/Token\/tokens\/".$tokenName.".txt";
     $this->url = $url;
     $this->tokenUrl = $tokenUrl;
     $this->testing = $testing;
@@ -80,6 +80,7 @@ Class Token {
     
     }
 
+    ftruncate ($tokenFileObject, 0);
     fwrite ($tokenFileObject, $this->token);
     fclose ($tokenFileObject);
 
@@ -108,7 +109,7 @@ Class Token {
       curl_setopt ($curl, CURLOPT_SSL_VERIFYPEER, false);
       curl_setopt ($curl, CURLOPT_HTTPHEADER, array (
         "Content-Type: application/json",
-        "Authorization: Bearer $this->token"
+        "Authorization: Bearer $token"
       ));
 
       $result = curl_exec ($curl);
@@ -118,7 +119,7 @@ Class Token {
 
         $decodedResults = json_decode ($result);
 
-        if ($this->decodedResults->errorCode !== null)
+        if ($this->decodedResults[0]->errorCode !== null)
           return -1;
         else 
           return 1;
@@ -156,7 +157,8 @@ Class Token {
     //curl_setopt ($curl, CURLOPT_VERBOSE, true);
     //curl_setopt ($curl, CURLOPT_STDERR, fopen ("curl_log.txt", "w+"));
 
-    $result = curl_exec ($curl);
+    $result = curl_exec ($curl);i
+    var_dump ($result);
     curl_close ($curl);
 
     if ($result) {
