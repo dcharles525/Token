@@ -61,7 +61,7 @@ Class Token {
   //@return void
   public function getToken ($tokenName) {
 
-    $tokenFileObject = fopen ($this->tokenPath, "w+");
+    $tokenFileObject = fopen ($this->tokenPath, "a+");
 
     //If we were able to get the token file handler
     if ($tokenFileObject) {
@@ -117,9 +117,9 @@ Class Token {
 
       if ($result) {
 
-        $decodedResults = json_decode ($result);
+        $decodedResults = json_decode ($result, true);
 
-        if ($this->decodedResults[0]->errorCode !== null)
+        if (isset ($decodedResults[0]["errorCode"]))
           return -1;
         else 
           return 1;
